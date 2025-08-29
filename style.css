@@ -19,6 +19,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 2;
 }
 
 /* =================================== */
@@ -26,7 +28,9 @@ body {
 /* =================================== */
 
 .header {
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('img/fondo5.png');
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+        url('img/fondo5.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -34,6 +38,23 @@ body {
     padding: 20px 0;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.header .container {
+    position: relative;
+    z-index: 2; /* Asegura que el contenido esté encima del fondo oscuro */
+}
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff1900, #000);
+    z-index: 1001;
+    transition: width 0.05s ease;
 }
 
 .logo {
@@ -79,6 +100,18 @@ body {
     color: white;
     padding: 100px 0;
     text-align: center;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6); /* Overlay oscuro */
+    z-index: 1;
 }
 
 .hero h1 {
@@ -125,7 +158,11 @@ body {
     padding: 100px 0;
     background: white;
 }
-
+.feature-card {
+    min-width: 250px; /* Reducido de 300px a 250px */
+    flex-shrink: 0;
+    max-width: 300px; /* Evita que se vuelvan demasiado anchas */
+}
 .section-title {
     text-align: center;
     font-size: 2.5rem;
@@ -144,14 +181,23 @@ body {
     border-radius: 2px;
 }
 
+/* =================================== */
+/*           FEATURES CAROUSEL         */
+/* =================================== */
+
+.features-carousel {
+    overflow: hidden;
+    padding: 20px 0;
+}
+
 .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
     gap: 40px;
-    margin-top: 60px;
 }
 
 .feature-card {
+    min-width: 300px;
+    flex-shrink: 0;
     background: white;
     padding: 40px 30px;
     border-radius: 15px;
@@ -191,30 +237,6 @@ body {
 }
 
 /* =================================== */
-/*        FEATURES CAROUSEL            */
-/* =================================== */
-
-/* Carrusel de Características */
-.features-carousel {
-    overflow: hidden;
-    padding: 20px 0;
-}
-
-.features-grid {
-    display: flex;
-    gap: 40px;
-    animation: slide 35s linear infinite; /* Aumentado a 35s para más contenido */
-}
-
-.feature-card {
-    min-width: 300px;
-    flex-shrink: 0;
-}
-
-
-
-
-/* =================================== */
 /*           STORY                     */
 /* =================================== */
 
@@ -225,6 +247,23 @@ body {
     background-position: center;
     background-attachment: fixed;
     color: white;
+    position: relative;
+}
+
+.story::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+}
+
+.story .container {
+    position: relative;
+    z-index: 2;
 }
 
 .story-content {
@@ -247,24 +286,72 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
+
+.leader-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
 .story-image {
-    background: rgba(255,255,255,0.1);
-    border-radius: 15px;
-    padding: 40px;
-    text-align: center;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    height: 500px; /* Ajusta la altura */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.story-image:hover {
+    transform: scale(1.02);
+}
+
+.leader-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    z-index: 10;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.story-image:hover .leader-overlay {
+    transform: translateY(0);
 }
 
 .leader-name {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .leader-title {
     font-size: 1.1rem;
     opacity: 0.9;
+    margin-bottom: 15px;
 }
+
+.story-image p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0;
+    font-style: italic;
+}
+
 
 /* =================================== */
 /*           PRODUCTS                  */
@@ -275,63 +362,126 @@ body {
     background: white;
 }
 
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
+/* =================================== */
+/*           CARRUSEL 3D CORREGIDO     */
+/* =================================== */
+
+.carousel-3d-container {
+    margin: 60px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.product-card {
+.carousel-3d {
+    width: 100%;
+    max-width: 900px;
+    height: 700px;
+    perspective: 1200px; /* Clave para el efecto 3D */
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgb(255, 0, 0);
+}
+
+.cards-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d; /* Mantiene el espacio 3D */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-item {
+    position: absolute;
+    width: 300px;
+    height: 600px;
+    backface-visibility: hidden;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    filter: grayscale(10%);
+    z-index: 1;
+}
+
+/* Posición realista en 3D */
+.card-item:nth-child(1) {
+    transform: rotateY(-60deg) translateX(-120px) translateZ(-100px);
+}
+.card-item:nth-child(2) {
+    transform: rotateY(0deg) translateZ(0);
+}
+.card-item:nth-child(3) {
+    transform: rotateY(60deg) translateX(120px) translateZ(-100px);
+}
+
+/* Tarjeta activa (centro) */
+.card-item.active {
+    opacity: 1;
+    filter: none;
+    transform: rotateY(0deg) scale(1.1) translateZ(0);
+    z-index: 10;
+}
+
+.card {
     background: white;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform-style: preserve-3d;
 }
 
 .product-image {
     width: 100%;
-    height: 400px; /* Aumentado de 360px a 400px */
+    height: 580px;
     overflow: hidden;
-    border-radius: 10px;
 }
 
 .product-image img {
     width: 100%;
-    height: 300px;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
 
-.product-card:hover .product-image img {
+.product-image img:hover {
     transform: scale(1.05);
 }
 
+.product-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .product-info h3 {
-    font-size: 1.8rem; /* Más grande */
-    margin: 15px 0 10px;
+    font-size: 1.4rem;
+    margin: 0;
     color: #1b1f22;
     text-align: center;
 }
 
 .product-info p {
-    font-size: 1.2rem; /* Más grande */
+    font-size: 0.95rem;
     color: #555;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
     flex-grow: 1;
 }
 
 .price {
-    font-size: 2rem; /* Más grande */
+    font-size: 1.6rem;
     font-weight: bold;
     color: #ff1900;
-    margin: 15px 0;
+    margin: 0;
     text-align: center;
 }
 
@@ -339,17 +489,47 @@ body {
     display: block;
     background: linear-gradient(45deg, #000000, #ff0000b0);
     color: white;
-    padding: 15px 30px;
+    padding: 12px 25px;
     text-decoration: none;
     border-radius: 25px;
     text-align: center;
     font-weight: bold;
+    font-size: 0.95rem;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .cta-secondary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+}
+
+/* Botones del carrusel 3D */
+.carousel-btn {
+    background: #000;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.carousel-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    background: #222;
+}
+
+.carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 /* =================================== */
@@ -514,195 +694,7 @@ body {
 }
 
 /* =================================== */
-/*           RESPONSIVE                */
-/* =================================== */
-
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero p {
-        font-size: 1.1rem;
-    }
-    
-    .story-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-/* =================================== */
-/*           CARRUSEL 3D                 */
-/* =================================== */
-
-.carousel-3d-container {
-    margin: 60px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.carousel-3d {
-    width: 100%;
-    max-width: 900px;
-    height: 700px; /* Aumentado de 500px a 600px */
-    perspective: 1200px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgb(255, 0, 0);
-}
-
-.cards-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.8s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.card-item {
-    position: absolute;
-    width: 350px;
-    height: 580px; /* Aumentado de 550px a 580px */
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    opacity: 0.6;
-    filter: grayscale(10%);
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.card-item:nth-child(1) { transform: rotateY(-60deg) translateX(-120px); }
-.card-item:nth-child(2) { transform: rotateY(0deg); }
-.card-item:nth-child(3) { transform: rotateY(60deg) translateX(120px); }
-
-.card-item.active {
-    opacity: 1;
-    filter: none;
-    transform: rotateY(0deg) scale(1.1);
-    z-index: 10;
-}
-
-.card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    transform-style: preserve-3d;
-    transform: translateZ(50px);
-}
-
-.product-image {
-    width: 100%;
-    height: 280px;
-    overflow: hidden;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.product-image img:hover {
-    transform: scale(1.05);
-}
-
-.product-info {
-    padding: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.product-info h3 {
-    font-size: 1.4rem;
-    margin: 0;
-    color: #1b1f22;
-    text-align: center;
-}
-
-.product-info p {
-    font-size: 0.95rem;
-    color: #555;
-    line-height: 1.5;
-    margin: 0;
-    flex-grow: 1;
-}
-
-.price {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #ff1900;
-    margin: 0;
-    text-align: center;
-}
-
-.cta-secondary {
-    display: block;
-    background: linear-gradient(45deg, #000000, #ff0000b0);
-    color: white;
-    padding: 12px 25px;
-    text-decoration: none;
-    border-radius: 25px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-}
-
-.cta-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102,126,234,0.3);
-}
-
-/* Botones */
-.carousel-btn {
-    background: #000;
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-}
-
-.carousel-btn:hover:not(:disabled) {
-    transform: scale(1.1);
-    background: #222;
-}
-
-.carousel-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* =================================== */
-/*            Modal                */
+/*           MODAL IMAGEN AMPLIADA     */
 /* =================================== */
 
 .modal {
@@ -714,7 +706,6 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.9);
-    overflow: hidden;
 }
 
 .modal-content {
@@ -725,7 +716,6 @@ body {
     align-items: center;
     width: 100%;
     height: 100%;
-    background: transparent;
 }
 
 .modal-image {
@@ -758,4 +748,133 @@ body {
 .close:hover {
     background: rgba(255,0,0,0.7);
     transform: scale(1.1);
+}
+
+/* =================================== */
+/*           RESPONSIVE                */
+/* =================================== */
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .story-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+/* =================================== */
+/*           ANIMACION DE ENTRADA      */
+/* =================================== */
+.animate-init {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* =================================== */
+/*               ZOOM                  */
+/* =================================== */
+.product-image img,
+.feature-icon {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform;
+}
+
+.product-image img:hover,
+.feature-icon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* =================================== */
+/*          EFECTOS DE GLOW            */
+/* =================================== */
+
+.cta-primary,
+.floating-cta,
+.carousel-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-primary::after,
+.floating-cta::after,
+.carousel-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+.cta-primary:hover::after,
+.floating-cta:hover::after,
+.carousel-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+/* =================================== */
+/*          SCROLL PROGRESS            */
+/* =================================== */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff1900, #000);
+    z-index: 1001;
+    transition: width 0.05s ease;
+}
+
+/* =================================== */
+/*    Botones con efecto de rebote     */          
+/* =================================== */
+
+button, .cta-secondary, .cta-primary {
+    transition: all 0.3s ease;
+}
+
+button:hover, 
+.cta-secondary:hover, 
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* =================================== */
+/*  Animaciones para la sección Story  */          
+/* =================================== */
+
+.animate-init {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }

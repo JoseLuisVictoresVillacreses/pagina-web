@@ -10,6 +10,7 @@
 <body>
     <!-- Header -->
     <header class="header" id="inicio">
+        <div class="scroll-progress"></div>
         <div class="container">
             <div class="logo">MISS SARIA WALLET</div>
             <div class="tagline">Cuero Lavable • Diseño Único • Aromas de Marca • Impacto Social</div>
@@ -95,27 +96,30 @@
         </div>
     </section>
 
-    <!-- Story Section -->
-    <section class="story">
-        <div class="container">
-            <div class="story-content">
-                <div class="story-text">
-                <h2>Una Historia de Pasión y Propósito</h2>
-                <p>Detrás de cada cartera y cada fragancia hay una historia de excelencia y prestigio. Nuestra asociación, bajo el liderazgo visionario de <strong>Jenniffer Dalinda Vivas Lastra</strong>, nació del sueño de traer al país accesorios y perfumes de empresas renombradas, seleccionados cuidadosamente para impactar positivamente en nuestras vidas y comunidad.</p>
+        <!-- Story Section -->
+        <section class="story">
+            <div class="container">
+                <div class="story-content">
+                    <div class="story-text">
+                        <h2>Una Historia de Pasión y Propósito</h2>
+                        <p>Detrás de cada cartera y cada fragancia hay una historia de excelencia y prestigio. Nuestra asociación, bajo el liderazgo visionario de <strong>Jenniffer Dalinda Vivas Lastra</strong>, nació del sueño de traer al país accesorios y perfumes de empresas renombradas, seleccionados cuidadosamente para impactar positivamente en nuestras vidas y comunidad.</p>
 
-                <p>Cada cartera y cada perfume representan calidad y dedicación, reflejando nuestro compromiso por ofrecer lo mejor a nuestros clientes, mientras apoyamos un proyecto que contribuye al bienestar de todas las familias involucradas.</p>
+                        <p>Cada cartera y cada perfume representan calidad y dedicación, reflejando nuestro compromiso por ofrecer lo mejor a nuestros clientes, mientras apoyamos un proyecto que contribuye al bienestar de todas las familias involucradas.</p>
 
-                <p>No solo estás adquiriendo una cartera o un perfume; estás invirtiendo en elegancia, calidad y en el crecimiento de una iniciativa que transforma vidas mientras celebra la belleza y el estilo en todas sus formas.</p>
-                </div>
-                
-                <div class="story-image">
-                    <div class="leader-name">Jenniffer Dalinda Vivas Lastra</div>
-                    <div class="leader-title">Líder y Visionaria</div>
-                    <p style="margin-top: 20px; font-size: 0.95rem;">"Cada cartera y perfume que ofrecemos proviene de empresas renombradas, y refleja nuestro compromiso con la calidad y la excelencia."</p>
+                        <p>No solo estás adquiriendo una cartera o un perfume; estás invirtiendo en elegancia, calidad y en el crecimiento de una iniciativa que transforma vidas mientras celebra la belleza y el estilo en todas sus formas.</p>
+                    </div>
+                    
+                    <div class="story-image">
+                        <img src="img/leader.jpg" alt="Jenniffer Dalinda Vivas Lastra" class="leader-img">
+                        <div class="leader-overlay">
+                            <div class="leader-name">Jenniffer Dalinda Vivas Lastra</div>
+                            <div class="leader-title">Líder y Visionaria</div>
+                            <p>"Cada cartera y perfume que ofrecemos proviene de empresas renombradas, y refleja nuestro compromiso con la calidad y la excelencia."</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- Products Section -->
     <section class="products" id="productos">
@@ -125,7 +129,7 @@
             <div class="carousel-3d-container">
                 <button class="carousel-btn prev-btn" data-carousel="bags">◀</button>
                 <div class="carousel-3d">
-                    <div class="cards-wrapper" id="bags-wrapper">
+                    <div class="cards-wrapper" id="bags-wrapper" style="transform-style: preserve-3d;">
                         <div class="card-item">
                             <div class="card">
                                 <div class="product-image">
@@ -177,7 +181,7 @@
             <div class="carousel-3d-container">
                 <button class="carousel-btn prev-btn" data-carousel="perfumes">◀</button>
                 <div class="carousel-3d">
-                    <div class="cards-wrapper" id="perfumes-wrapper">
+                    <div class="cards-wrapper" id="perfumes-wrapper" style="transform-style: preserve-3d;">
                         <div class="card-item">
                             <div class="card">
                                 <div class="product-image">
@@ -319,8 +323,23 @@
 
     <!-- Floating CTA -->
     <a href="https://wa.me/593968266607" class="floating-cta">💬 ¡Compra Ya!</a>
-    
+
+    <!-- Modal para ver imagen ampliada -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Imagen ampliada" class="modal-image">
+        </div>
+    </div>
+
     <script>
+        // Barra de progreso de scroll
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.scroll-progress').style.width = `${scrollPercent}%`;
+        });
         // Año dinámico en el footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -339,20 +358,17 @@
         });
 
         // Animación de entrada para cards
-        const observer = new IntersectionObserver((entries) => {
+        const animateOnScroll = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animate-in');
                 }
             });
-        }, 
-        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.feature-card, .product-card, .testimonial-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+        document.querySelectorAll('.feature-card, .product-card, .testimonial-card, .story-content, .section-title').forEach(el => {
+            el.classList.add('animate-init');
+            animateOnScroll.observe(el);
         });
 
         // Parallax suave en hero
@@ -360,8 +376,49 @@
             const scrolled = window.pageYOffset;
             const hero = document.querySelector('.hero');
             if (hero) {
-                hero.style.backgroundPosition = `center calc(50% + ${scrolled * 0.1}px)`;
+                hero.style.backgroundPosition = `center calc(50% + ${scrolled * 0.15}px)`;
             }
+        });
+
+        // Carrusel automático que muestra TODAS las tarjetas
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.querySelector('.features-carousel');
+            const grid = document.querySelector('.features-grid');
+            const cards = document.querySelectorAll('.feature-card');
+
+            if (!carousel || !grid || cards.length === 0) return;
+
+            const totalWidth = Array.from(cards).reduce((acc, card) => acc + card.offsetWidth + 40, 0) - carousel.offsetWidth;
+            
+            if (totalWidth <= 0) return;
+
+            let currentX = 0;
+            const speed = 1.5; // Ajusta para más o menos velocidad
+            let animationId;
+
+            function animate() {
+                currentX -= speed;
+                if (currentX <= -totalWidth) {
+                    currentX = 0;
+                }
+                grid.style.transform = `translateX(${currentX}px)`;
+                animationId = requestAnimationFrame(animate);
+            }
+
+            function start() {
+                animationId = requestAnimationFrame(animate);
+            }
+
+            function stop() {
+                cancelAnimationFrame(animationId);
+            }
+
+            start();
+
+            carousel.addEventListener('mouseenter', stop);
+            carousel.addEventListener('mouseleave', start);
+            carousel.addEventListener('touchstart', stop);
+            carousel.addEventListener('touchend', start);
         });
 
         // Carrusel 3D - Control
@@ -375,13 +432,35 @@
             let indexPerfumes = 1;
 
             function updateCarousel(wrapperId, index) {
-                const cards = document.querySelectorAll(`#${wrapperId} .card-item`);
-                cards.forEach(card => card.classList.remove('active'));
-                if (cards[index]) {
-                    cards[index].classList.add('active');
-                }
-            }
+            const cards = document.querySelectorAll(`#${wrapperId} .card-item`);
 
+            // Aseguramos que el contenedores tenga transform-style
+            const wrapper = document.getElementById(wrapperId);
+            wrapper.style.transformStyle = 'preserve-3d';
+
+            cards.forEach((card, i) => {
+                        // Restablecer transformaciones
+                        card.style.transform = '';
+                        card.style.opacity = '0.6';
+                        card.style.filter = 'grayscale(10%)';
+                        card.style.zIndex = '1';
+
+                        // Aplicar efecto 3D según posición
+                        if (i === index) {
+                            // Tarjeta activa (centro)
+                            card.style.transform = 'rotateY(0deg) translateZ(0)';
+                            card.style.opacity = '1';
+                            card.style.filter = 'none';
+                            card.style.zIndex = '10';
+                        } else if (i < index) {
+                            // Tarjetas a la izquierda
+                            card.style.transform = 'rotateY(-60deg) translateX(-120px) translateZ(-100px)';
+                        } else {
+                            // Tarjetas a la derecha
+                            card.style.transform = 'rotateY(60deg) translateX(120px) translateZ(-100px)';
+                        }
+                    });
+                }
             // Carteras
             nextBtnBags.addEventListener('click', () => {
                 if (indexBags < 2) {
@@ -416,7 +495,8 @@
             updateCarousel('bags-wrapper', 1);
             updateCarousel('perfumes-wrapper', 1);
         });
-                // Modal de imagen ampliada
+
+        // Modal de imagen ampliada
         document.querySelectorAll('.product-image img').forEach(img => {
             img.addEventListener('click', () => {
                 const modal = document.getElementById('imageModal');
@@ -439,64 +519,12 @@
         });
 
         // Cerrar modal al hacer clic fuera de la imagen
-        window.addEventListener('click', (event) => {s
+        window.addEventListener('click', (event) => {
             const modal = document.getElementById('imageModal');
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
         });
-      // Carrusel automático que muestra TODAS las tarjetas
-document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.querySelector('.features-carousel');
-    const grid = document.querySelector('.features-grid');
-    const cards = document.querySelectorAll('.feature-card');
-
-    if (!carousel || !grid || cards.length === 0) return;
-
-    // Calcular el ancho total del desplazamiento
-    const totalWidth = Array.from(cards).reduce((acc, card) => acc + card.offsetWidth + 40, 0) - carousel.offsetWidth;
-    
-    if (totalWidth <= 0) return;
-
-    let currentX = 0;
-    const speed = 3.5; // px por frame (ajusta para más o menos velocidad)
-    let animationId;
-
-    function animate() {
-        currentX -= speed;
-        if (currentX <= -totalWidth) {
-            currentX = 0; // Reiniciar suavemente
-        }
-        grid.style.transform = `translateX(${currentX}px)`;
-        animationId = requestAnimationFrame(animate);
-    }
-
-    function start() {
-        animationId = requestAnimationFrame(animate);
-    }
-
-    function stop() {
-        cancelAnimationFrame(animationId);
-    }
-
-    // Iniciar
-    start();
-
-    // Pausar al pasar el mouse
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', start);
-
-    // Soporte táctil
-    carousel.addEventListener('touchstart', stop);
-    carousel.addEventListener('touchend', start);
-});
     </script>
-    <!-- Modal para ver imagen ampliada -->
-    <div id="imageModal" class="modal">
-        <span class="close">&times;</span>
-        <div class="modal-content">
-            <img id="modalImage" src="" alt="Imagen ampliada" class="modal-image">
-        </div>
-    </div>
 </body>
 </html>
