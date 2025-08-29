@@ -96,30 +96,31 @@
         </div>
     </section>
 
-        <!-- Story Section -->
-        <section class="story">
-            <div class="container">
-                <div class="story-content">
-                    <div class="story-text">
-                        <h2>Una Historia de Pasión y Propósito</h2>
-                        <p>Detrás de cada cartera y cada fragancia hay una historia de excelencia y prestigio. Nuestra asociación, bajo el liderazgo visionario de <strong>Jenniffer Dalinda Vivas Lastra</strong>, nació del sueño de traer al país accesorios y perfumes de empresas renombradas, seleccionados cuidadosamente para impactar positivamente en nuestras vidas y comunidad.</p>
+    <!-- Story Section -->
+    <section class="story">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>Una Historia de Pasión y Propósito</h2>
+                    <p>Detrás de cada cartera y cada fragancia hay una historia de excelencia y prestigio. Nuestra asociación, bajo el liderazgo visionario de <strong>Jenniffer Dalinda Vivas Lastra</strong>, nació del sueño de traer al país accesorios y perfumes de empresas renombradas, seleccionados cuidadosamente para impactar positivamente en nuestras vidas y comunidad.</p>
 
-                        <p>Cada cartera y cada perfume representan calidad y dedicación, reflejando nuestro compromiso por ofrecer lo mejor a nuestros clientes, mientras apoyamos un proyecto que contribuye al bienestar de todas las familias involucradas.</p>
+                    <p>Cada cartera y cada perfume representan calidad y dedicación, reflejando nuestro compromiso por ofrecer lo mejor a nuestros clientes, mientras apoyamos un proyecto que contribuye al bienestar de todas las familias involucradas.</p>
 
-                        <p>No solo estás adquiriendo una cartera o un perfume; estás invirtiendo en elegancia, calidad y en el crecimiento de una iniciativa que transforma vidas mientras celebra la belleza y el estilo en todas sus formas.</p>
-                    </div>
-                    
-                    <div class="story-image">
-                        <img src="img/leader.jpg" alt="Jenniffer Dalinda Vivas Lastra" class="leader-img">
-                        <div class="leader-overlay">
-                            <div class="leader-name">Jenniffer Dalinda Vivas Lastra</div>
-                            <div class="leader-title">Líder y Visionaria</div>
-                            <p>"Cada cartera y perfume que ofrecemos proviene de empresas renombradas, y refleja nuestro compromiso con la calidad y la excelencia."</p>
-                        </div>
+                    <p>No solo estás adquiriendo una cartera o un perfume; estás invirtiendo en elegancia, calidad y en el crecimiento de una iniciativa que transforma vidas mientras celebra la belleza y el estilo en todas sus formas.</p>
+                </div>
+                
+                <!-- Tarjeta con la imagen de la líder -->
+                <div class="leader-card">
+                    <img src="img/perfil1.jpg" alt="Jenniffer Dalinda Vivas Lastra" class="leader-img">
+                    <div class="leader-overlay">
+                        <div class="leader-name">Jenniffer Dalinda Vivas Lastra</div>
+                        <div class="leader-title">Líder y Visionaria</div>
+                        <p>"Cada cartera y perfume que ofrecemos proviene de empresas renombradas, y refleja nuestro compromiso con la calidad y la excelencia."</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
     <!-- Products Section -->
     <section class="products" id="productos">
@@ -307,9 +308,12 @@
                 </div>
             </div>
             
-            <div style="margin-top: 40px;">
+            <div style="margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
                 <a href="https://wa.me/593968266607" class="cta-primary">¡Contactar por WhatsApp!</a>
+                <a href="https://www.tiktok.com/@miss.saria.wallet" class="cta-primary">¡Verifica nuestro tiktok!</a>
+                <a href="https://www.facebook.com/linda.monroi.2025/" class="cta-primary">¡Verifica nuestro Facebook!</a>
             </div>
+
         </div>
     </section>
 
@@ -332,6 +336,11 @@
         </div>
     </div>
 
+    <!-- Efecto de ola del mouse -->
+    <div class="wave-container">
+        <div class="wave"></div>
+    </div>
+
     <script>
         // Barra de progreso de scroll
         window.addEventListener('scroll', () => {
@@ -340,6 +349,7 @@
             const scrollPercent = (scrollTop / docHeight) * 100;
             document.querySelector('.scroll-progress').style.width = `${scrollPercent}%`;
         });
+
         // Año dinámico en el footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -393,7 +403,7 @@
             if (totalWidth <= 0) return;
 
             let currentX = 0;
-            const speed = 1.5; // Ajusta para más o menos velocidad
+            const speed = 1.5;
             let animationId;
 
             function animate() {
@@ -432,36 +442,29 @@
             let indexPerfumes = 1;
 
             function updateCarousel(wrapperId, index) {
-            const cards = document.querySelectorAll(`#${wrapperId} .card-item`);
+                const cards = document.querySelectorAll(`#${wrapperId} .card-item`);
+                const wrapper = document.getElementById(wrapperId);
+                wrapper.style.transformStyle = 'preserve-3d';
 
-            // Aseguramos que el contenedores tenga transform-style
-            const wrapper = document.getElementById(wrapperId);
-            wrapper.style.transformStyle = 'preserve-3d';
+                cards.forEach((card, i) => {
+                    card.style.transform = '';
+                    card.style.opacity = '0.6';
+                    card.style.filter = 'grayscale(10%)';
+                    card.style.zIndex = '1';
 
-            cards.forEach((card, i) => {
-                        // Restablecer transformaciones
-                        card.style.transform = '';
-                        card.style.opacity = '0.6';
-                        card.style.filter = 'grayscale(10%)';
-                        card.style.zIndex = '1';
+                    if (i === index) {
+                        card.style.transform = 'rotateY(0deg) translateZ(0)';
+                        card.style.opacity = '1';
+                        card.style.filter = 'none';
+                        card.style.zIndex = '10';
+                    } else if (i < index) {
+                        card.style.transform = 'rotateY(-60deg) translateX(-120px) translateZ(-100px)';
+                    } else {
+                        card.style.transform = 'rotateY(60deg) translateX(120px) translateZ(-100px)';
+                    }
+                });
+            }
 
-                        // Aplicar efecto 3D según posición
-                        if (i === index) {
-                            // Tarjeta activa (centro)
-                            card.style.transform = 'rotateY(0deg) translateZ(0)';
-                            card.style.opacity = '1';
-                            card.style.filter = 'none';
-                            card.style.zIndex = '10';
-                        } else if (i < index) {
-                            // Tarjetas a la izquierda
-                            card.style.transform = 'rotateY(-60deg) translateX(-120px) translateZ(-100px)';
-                        } else {
-                            // Tarjetas a la derecha
-                            card.style.transform = 'rotateY(60deg) translateX(120px) translateZ(-100px)';
-                        }
-                    });
-                }
-            // Carteras
             nextBtnBags.addEventListener('click', () => {
                 if (indexBags < 2) {
                     indexBags++;
@@ -476,7 +479,6 @@
                 }
             });
 
-            // Perfumes
             nextBtnPerfumes.addEventListener('click', () => {
                 if (indexPerfumes < 2) {
                     indexPerfumes++;
@@ -491,7 +493,6 @@
                 }
             });
 
-            // Inicializar
             updateCarousel('bags-wrapper', 1);
             updateCarousel('perfumes-wrapper', 1);
         });
@@ -506,7 +507,7 @@
             });
         });
 
-        // Cerrar modal al hacer clic en la "X"
+        // Cerrar modal con "X"
         document.addEventListener('DOMContentLoaded', () => {
             const closeBtn = document.querySelector('.close');
             const modal = document.getElementById('imageModal');
@@ -518,13 +519,40 @@
             }
         });
 
-        // Cerrar modal al hacer clic fuera de la imagen
+        // Cerrar modal al hacer clic fuera
         window.addEventListener('click', (event) => {
             const modal = document.getElementById('imageModal');
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
         });
+
+        // === Efecto de iluminación del mouse ===
+        document.addEventListener('DOMContentLoaded', () => {
+            const wave = document.querySelector('.wave');
+
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+
+                wave.style.left = `${x}px`;
+                wave.style.top = `${y}px`;
+                wave.style.opacity = '0.4';
+                wave.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+
+            document.addEventListener('mouseout', () => {
+                wave.style.opacity = '0';
+                wave.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+    // Eliminar el botón de WhatsApp al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        const whatsappButton = document.querySelector('.whatsapp-button');
+        if (whatsappButton) {
+            whatsappButton.remove();
+        }
+    });
     </script>
 </body>
 </html>
