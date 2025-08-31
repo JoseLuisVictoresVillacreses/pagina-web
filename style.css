@@ -941,6 +941,7 @@ body {
 
 .cta-primary,
 .cta-secondary,
+.carousel-btn,
 .floating-cta {
     overflow: hidden;
     transition: all 0.3s ease;
