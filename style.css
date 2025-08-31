@@ -28,23 +28,18 @@ body {
 /* =================================== */
 
 .header {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     color: white;
     text-align: center;
-    padding: 60px 20px;
+    padding: 20px 20px;
     overflow: hidden;
     background: url('img/fondo100.jpg') center/cover no-repeat;
-    z-index: 1;
-}
-
-/* Degradado animado sobre la imagen */
-.header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-size: 1000% 1000%;
-    animation: neonBackground 20s ease infinite;
-    z-index: -2;
+    background-attachment: relative;
+    z-index: 1000;
+    transition: padding 0.3s ease;
 }
 
 /* Capa oscura + blur para legibilidad */
@@ -57,23 +52,47 @@ body {
     z-index: -1;
 }
 
+/* Efecto de header más compacto al hacer scroll */
+.header.scrolled {
+    padding: 15px 20px;
+}
+
 /* LOGO */
 .logo {
-    font-size: 3.2rem;
+    font-size: 2.8rem;
     font-weight: 900;
     letter-spacing: 3px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    text-shadow: 0px 0px 15px rgb(255, 255, 255);
+    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
     animation: floatLogo 3s ease-in-out infinite;
+    transition: font-size 0.3s ease;
+}
+
+.header.scrolled .logo {
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    opacity: 0.95;
+    transition: opacity 0.3s ease;
 }
 
 /* TAGLINE */
 .tagline {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 300;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     opacity: 0.95;
+    transition: opacity 0.3s ease;
+}
+
+.header.scrolled .tagline {
+    opacity: 0.8;
+    display: none; /* Ocultar la tagline al hacer scroll */
+}
+.header.scrolled .logo {
+    opacity: 0.8;
+    display: none; /* Ocultar la logo al hacer scroll */
 }
 
 /* NAVBAR */
@@ -113,6 +132,7 @@ body {
 .navbar a:hover::after {
     width: 100%;
 }
+
 
 /* ANIMACIONES */
 @keyframes neonBackground {
@@ -1226,4 +1246,24 @@ body {
 
 .btn-whatsapp:hover {
     background: #8c1212;
+}
+/* =================================== */
+/*           AJUSTE HEADER FIJO       */
+/* =================================== */
+
+/* Espacio para que el header fijo no tape el contenido */
+#inicio {
+    padding-top: 10px;
+    margin-top: 0;
+}
+
+/* Para que el scroll suave no tape el header */
+section {
+    scroll-margin-top: 100px;
+}
+
+/* Asegurar que el contenedores principal no se vea afectado */
+body {
+    margin: 0;
+    padding-top: 100px; /* Altura del header */
 }
