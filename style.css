@@ -1267,3 +1267,213 @@ body {
     margin: 0;
     padding-top: 100px; /* Altura del header */
 }
+
+/* =================================== */
+/*           RESPONSIVE (MÓVIL)       */
+/* =================================== */
+
+@media (max-width: 768px) {
+    /* HEADER */
+    .header {
+        padding: 20px 15px;
+    }
+
+    .logo {
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+
+    .navbar ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .navbar a {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    /* HERO */
+    .hero {
+        padding: 60px 20px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        max-width: 100%;
+    }
+
+    .cta-primary {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+
+    /* FEATURES */
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .feature-card {
+        padding: 25px 20px;
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    /* STORY */
+    .story-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .story-text h2 {
+        font-size: 2rem;
+    }
+
+    .leader-card {
+        width: 100%;
+        height: 300px;
+    }
+
+    /* PRODUCTS - Carrusel 3D */
+    .carousel-3d-container {
+        margin: 40px 0;
+    }
+
+    .carousel-3d {
+        height: 500px;
+        border-radius: 30px;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .product-image img {
+        height: 200px;
+    }
+
+    .product-info {
+        padding: 15px;
+    }
+
+    .price {
+        font-size: 1.4rem;
+    }
+
+    .cta-secondary {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    /* TESTIMONIALS */
+    .testimonial-carousel-container {
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .testimonial-carousel {
+        position: relative;
+        transform: none;
+        animation: none;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonial-slide {
+        min-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    /* CONTACT */
+    .contact {
+        padding: 60px 20px;
+    }
+
+    .contact h2 {
+        font-size: 2.2rem;
+    }
+
+    .contact p {
+        font-size: 1.1rem;
+    }
+
+    .contact-info {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-item {
+        padding: 20px;
+    }
+
+    /* FOOTER */
+    .footer {
+        padding: 30px 20px;
+    }
+
+    /* FLOATING CTA & CART */
+    .floating-cta,
+    .cart-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .floating-cta {
+        padding: 12px 0;
+        font-size: 0.9rem;
+    }
+
+    .cart-icon span {
+        top: -6px;
+        right: -6px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.7rem;
+    }
+
+    /* MODAL DE IMAGEN */
+    .modal-image {
+        max-width: 95%;
+        max-height: 80vh;
+    }
+
+    .close {
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+    }
+
+    /* CONTAINER */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Ajuste general de espaciado */
+    section {
+        padding: 60px 0;
+    }
+}
