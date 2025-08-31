@@ -140,7 +140,7 @@
                                     <h3>Cartera Clásica Elegante</h3>
                                     <p>Perfecta para uso diario, combina con cualquier outfit y mantiene tus pertenencias organizadas con estilo.</p>
                                     <div class="price">USD 4.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡La Quiero Ya!</a>
+                                    <a href="" class="cta-secondary">¡La Quiero Ya!</a>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                     <h3>Cartera Ejecutiva Premium</h3>
                                     <p>Diseñada para la mujer profesional que no compromete elegancia por funcionalidad. Compartimentos especiales para laptop y documentos.</p>
                                     <div class="price">USD 4.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡Reservar Ahora!</a>
+                                    <a href="" class="cta-secondary">¡Reservar Ahora!</a>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                                     <h3>Cartera Casual Chic</h3>
                                     <p>Perfecta para salidas casuales, citas y momentos especiales. Ligera, cómoda y absolutamente hermosa.</p>
                                     <div class="price">USD 4.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡Comprar Ahora!</a>
+                                    <a href="" class="cta-secondary">¡Comprar Ahora!</a>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                                     <h3>Perfume Bharara King</h3>
                                     <p>El perfume Bharara King es una fragancia masculina intensa y elegante con notas cítricas frescas, especiadas y un fondo amaderado que transmite poder y distinción.</p>
                                     <div class="price">USD 59.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡La Quiero Ya!</a>
+                                    <a href="" class="cta-secondary">¡La Quiero Ya!</a>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +206,7 @@
                                     <h3>Perfume Jean Paul Gaultier Ultra Male</h3>
                                     <p>Esta fragancia masculina intensa y seductora que mezcla la frescura de la pera con especias, lavanda y un fondo dulce de vainilla y ámbar.</p>
                                     <div class="price">USD 49.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡Reservar Ahora!</a>
+                                    <a href="" class="cta-secondary">¡Reservar Ahora!</a>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                                     <h3>Perfume Jean Paul Gaultier Le Beau Paradise Garden</h3>
                                     <p>Esta fragancia masculina fresca y sensual que combina notas verdes, florales y amaderadas con un toque exótico y elegante.</p>
                                     <div class="price">USD 49.99</div>
-                                    <a href="#contacto" class="cta-secondary">¡Comprar Ahora!</a>
+                                    <a href="" class="cta-secondary">¡Comprar Ahora!</a>
                                 </div>
                             </div>
                         </div>
@@ -324,9 +324,28 @@
             <p>Liderado con pasión por Jenniffer Dalinda Vivas Lastra</p>
         </div>
     </footer>
+    
+    <!-- Botón flotante del carrito -->
+    <div class="cart-icon" id="cart-icon">
+        🛒 <span id="cart-count">0</span>
+    </div>
+    <!-- Modal del carrito -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <h2>Tu Carrito</h2>
+            <button class="close-cart" id="close-cart">×</button>
+            <div id="cart-items">
+                <!-- Los productos se añadirán aquí -->
+            </div>
+            <div class="cart-total">
+                <strong>Total: $<span id="cart-total">0.00</span></strong>
+            </div>
+            <button class="btn-whatsapp" id="btn-whatsapp">💬 Comprar por WhatsApp</button>
+        </div>
+    </div>
 
     <!-- Floating CTA -->
-    <a href="https://wa.me/593968266607" class="floating-cta">💬 ¡Compra Ya!</a>
+    <a href="https://wa.me/593968266607" class="floating-cta">💬 ¡WhatsApp!</a>
 
     <!-- Modal para ver imagen ampliada -->
     <div id="imageModal" class="modal">
@@ -340,6 +359,9 @@
     <div class="wave-container">
         <div class="wave"></div>
     </div>
+
+    
+
 
     <script>
         // Barra de progreso de scroll
@@ -553,6 +575,144 @@
             whatsappButton.remove();
         }
     });
+   // Carrito de compras
+document.addEventListener('DOMContentLoaded', () => {
+    const cartIcon = document.getElementById('cart-icon');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCart = document.getElementById('close-cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
+    const btnWhatsapp = document.getElementById('btn-whatsapp');
+
+    // Elementos de la imagen ampliada
+    const modal = document.getElementById('imageModal');
+    const closeBtn = document.querySelector('.close');
+
+    let cart = [];
+
+    // Abrir carrito
+    cartIcon.addEventListener('click', () => {
+        cartModal.classList.add('active');
+        cartIcon.style.display = 'none'; // Ocultar el botón del carrito
+    });
+
+    // Cerrar carrito
+    closeCart.addEventListener('click', () => {
+        cartModal.classList.remove('active');
+        cartIcon.style.display = 'flex'; // Mostrar el botón del carrito
+    });
+
+    // Cerrar carrito al hacer clic fuera
+    cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+            cartModal.classList.remove('active');
+            cartIcon.style.display = 'flex';
+        }
+    });
+
+    // Añadir producto al carrito y abrir el carrito automáticamente
+    document.querySelectorAll('.cta-secondary').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const card = button.closest('.card');
+            const title = card.querySelector('h3').textContent;
+            const price = card.querySelector('.price').textContent;
+            const imgSrc = card.querySelector('img').src;
+
+            // Agregar al carrito
+            cart.push({ title, price, imgSrc });
+
+            // Actualizar UI
+            updateCart();
+
+            // Abrir el carrito automáticamente
+            cartModal.classList.add('active');
+            cartIcon.style.display = 'none'; // Ocultar el botón mientras está abierto
+        });
+    });
+
+    // Actualizar carrito
+    function updateCart() {
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const priceValue = parseFloat(item.price.replace('USD ', ''));
+            total += priceValue;
+
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+                <img src="${item.imgSrc}" alt="${item.title}">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">${item.price}</div>
+                    <div class="remove-item" data-index="${index}">Eliminar</div>
+                </div>
+            `;
+            cartItems.appendChild(cartItem);
+        });
+
+        // Eliminar producto
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = e.target.dataset.index;
+                cart.splice(index, 1);
+                updateCart();
+            });
+        });
+
+        // Actualizar contador y total
+        cartCount.textContent = cart.length;
+        cartTotal.textContent = total.toFixed(2);
+    }
+
+    // Enviar por WhatsApp
+    btnWhatsapp.addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert('Tu carrito está vacío');
+            return;
+        }
+
+        let message = 'Hola, quiero comprar los siguientes productos:\n\n';
+        cart.forEach(item => {
+            message += `• ${item.title} - ${item.price}\n`;
+        });
+        message += `\nTotal: $${cartTotal.textContent}`;
+
+        const whatsappURL = `https://wa.me/593968266607?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+    });
+
+    // Ocultar el botón del carrito al abrir la imagen ampliada
+    document.querySelectorAll('.product-image img').forEach(img => {
+        img.addEventListener('click', () => {
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = img.src;
+            modal.style.display = 'block';
+            cartIcon.style.display = 'none';
+        });
+    });
+
+    // Mostrar el botón del carrito al cerrar la imagen ampliada
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        if (!cartModal.classList.contains('active')) {
+            cartIcon.style.display = 'flex';
+        }
+    });
+
+    // Cerrar modal al hacer clic fuera
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            if (!cartModal.classList.contains('active')) {
+                cartIcon.style.display = 'flex';
+            }
+        }
+    });
+});
     </script>
 </body>
 </html>
