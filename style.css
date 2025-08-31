@@ -853,13 +853,24 @@ body {
 }
 
 /* =================================== */
-/*           FLOATING CTA              */
+/*        BOTONES FLOTANTES           */
 /* =================================== */
 
-.floating-cta {
+.floating-buttons {
     position: fixed;
     bottom: 30px;
     right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+    align-items: flex-end;
+}
+
+.floating-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(45deg, #000, #f00);
     color: white;
     padding: 15px 25px;
@@ -867,25 +878,71 @@ body {
     text-decoration: none;
     font-weight: bold;
     box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
-    z-index: 1000;
-    animation: pulse 2s infinite;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     font-size: 1rem;
     white-space: nowrap;
+    min-width: 170px;
+    text-align: center;
 }
 
+/* Animación de pulsación */
 .floating-cta:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    box-shadow: 0 12px 35px rgba(255, 0, 0, 0.8);
 }
 
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 12px 35px rgba(255, 0, 0, 0.8);
+    }
+}
+
+/* Colores específicos */
+.floating-cta.whatsapp {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    box-shadow: 0 8px 25px rgba(0, 255, 85, 0.6);
+    animation: pulse 2s infinite;
+}
+
+.floating-cta.tiktok {
+    background: linear-gradient(45deg, #000, #000);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    animation: pulse 2s infinite;
+}
+
+.floating-cta.facebook {
+    background: linear-gradient(45deg, #1877f2, #166fe5);
+    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.6);
+    animation: pulse 2s infinite;
+}
+
+/* Animación por separado */
+.floating-cta.whatsapp:hover {
+    box-shadow: 0 12px 35px rgba(18, 140, 126, 0.8);
+}
+
+.floating-cta.tiktok:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+.floating-cta.facebook:hover {
+    box-shadow: 0 12px 35px rgba(22, 111, 229, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-cta {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        min-width: 180px;
     }
 }
 
