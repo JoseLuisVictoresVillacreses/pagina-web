@@ -900,7 +900,7 @@ body {
     width: 0%;
     height: 4px;
     background: linear-gradient(90deg, #ff1900, #000);
-    z-index: 1001;
+    z-index: 1001; /* Más alto que el header */
     transition: width 0.05s ease;
 }
 
@@ -939,6 +939,13 @@ body {
 /*           GLOW EFFECT               */
 /* =================================== */
 
+.cta-primary,
+.cta-secondary,
+.floating-cta {
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
 .cta-primary::after,
 .floating-cta::after,
 .carousel-btn::after {
@@ -961,6 +968,8 @@ body {
     width: 300px;
     height: 300px;
 }
+
+
 
 /* =================================== */
 /*           RESPONSIVE                */
@@ -1475,5 +1484,20 @@ body {
     /* Ajuste general de espaciado */
     section {
         padding: 60px 0;
+    }
+}
+@media (max-width: 768px) {
+    .cards-wrapper {
+        transform: none !important;
+    }
+
+    .card-item {
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+    }
+
+    .card-item.active {
+        transform: none !important;
     }
 }
